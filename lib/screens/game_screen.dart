@@ -365,25 +365,35 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
                 child: CustomPaint(
                   painter: TableFeltPainter(),
                   child: SafeArea(
-                    child: Column(
-                      children: [
-                        _buildTopBar(scale),
-                        _buildBalanceBar(scale),
-                        SizedBox(height: compact ? 4 : 8),
-                        _buildAiPlayersRow(scale),
-                        _buildDealerSection(scale),
-                        const Spacer(),
-                        _buildTableRules(scale),
-                        if (_game.phase == GamePhase.roundOver) ...[
-                          SizedBox(height: compact ? 4 : 8),
-                          _buildResultBanner(scale),
-                        ],
-                        const Spacer(),
-                        _buildPlayerSection(scale),
-                        SizedBox(height: compact ? 3 : 6),
-                        _buildBottomArea(scale),
-                        SizedBox(height: compact ? 6 : 10),
-                      ],
+                    child: SingleChildScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: h - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom,
+                        ),
+                        child: IntrinsicHeight(
+                          child: Column(
+                            children: [
+                              _buildTopBar(scale),
+                              _buildBalanceBar(scale),
+                              SizedBox(height: compact ? 4 : 8),
+                              _buildAiPlayersRow(scale),
+                              _buildDealerSection(scale),
+                              const Spacer(),
+                              _buildTableRules(scale),
+                              if (_game.phase == GamePhase.roundOver) ...[
+                                SizedBox(height: compact ? 4 : 8),
+                                _buildResultBanner(scale),
+                              ],
+                              const Spacer(),
+                              _buildPlayerSection(scale),
+                              SizedBox(height: compact ? 3 : 6),
+                              _buildBottomArea(scale),
+                              SizedBox(height: compact ? 6 : 10),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
